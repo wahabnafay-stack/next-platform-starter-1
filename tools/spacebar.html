@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Spacebar Counter — MyTools</title>
+
+  <!-- AdSense site tag: add the exact script you get from your AdSense account -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXX"
+          crossorigin="anonymous"></script>
+</head>
+<body>
+  <h1>Spacebar Counter</h1>
+  <p>Press the spacebar — it counts presses per second (CPS).</p>
+
+  <div>
+    <button id="startBtn">Start</button>
+    <button id="resetBtn">Reset</button>
+    <div id="count" style="font-size:2rem">0</div>
+    <div id="cps">CPS: 0</div>
+  </div>
+
+<script>
+let count = 0, startTime = 0, running=false;
+const countEl = document.getElementById('count'), cpsEl = document.getElementById('cps');
+document.getElementById('startBtn').addEventListener('click', ()=>{ count=0; startTime=Date.now(); running=true; countEl.innerText=0; cpsEl.innerText='CPS: 0'; });
+document.getElementById('resetBtn').addEventListener('click', ()=>{ count=0; running=false; countEl.innerText=0; cpsEl.innerText='CPS: 0'; });
+
+window.addEventListener('keydown', e=>{
+  if(!running) return;
+  if(e.code === 'Space') {
+    count++;
+    countEl.innerText = count;
+    const elapsed = (Date.now() - startTime) / 1000;
+    const cps = elapsed > 0 ? (count/elapsed).toFixed(2) : 0;
+    cpsEl.innerText = 'CPS: ' + cps;
+  }
+});
+</script>
+</body>
+</html>
